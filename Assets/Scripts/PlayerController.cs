@@ -9,17 +9,24 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 1f;
-    public bool isMoving = false;
+    public bool wantsToMove = false;
     public bool ShowDebug = true;
+
+    public bool canWalk = false;
 
     private float horizontalInput;
     private float verticalInput;
 
-    Rigidbody2D rdBod;
+    public Vector2 axisMove;
+
+    public Rigidbody2D rdBod;
+
+    private FSMachine stateMachine;
 
     private void Start()
     {
         rdBod = GetComponent<Rigidbody2D>();
+        stateMachine = GetComponent<FSMachine>();
     }
 
     // Update is called once per frame
@@ -29,13 +36,20 @@ public class PlayerController : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         if (horizontalInput != 0f || verticalInput != 0f)
-            isMoving = true;
+        {
+            wantsToMove = true;
+            stateMachine.ChangeState(new FSMWalking());
+        }   
         else
-            isMoving = false;
+        {
+            wantsToMove = false;
+            stateMachine.ChangeState(new FSMWalking());
+        }
+            
 
         PrintDebug();
 
-        rdBod.velocity = new Vector2(horizontalInput * speed, verticalInput * speed);
+        axisMove = new Vector2 (horizontalInput, verticalInput).normalized;
     }
 
     private void PrintDebug()
@@ -43,9 +57,19 @@ public class PlayerController : MonoBehaviour
         if (!ShowDebug)
             return;
 
-        Debug.Log(isMoving);
-
+        Debug.Log(wantsToMove);
         Debug.Log(horizontalInput);
         Debug.Log(verticalInput);
+    }
+
+    public void GoTo(Vector3 pointToGoTo)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, pointToGoTo, speed * Time.deltaTime);
+    }
+
+    public void Move()
+    {
+        if (canWalk) rdBod.velocity = axisMove * speed;
+        else rdBod.velocity = Vector3.zero;
     }
 }
