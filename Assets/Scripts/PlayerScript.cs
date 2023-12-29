@@ -40,4 +40,11 @@ public class PlayerScript : MonoBehaviour
             isWaitingMapTp = true;
         }
     }
+
+    public void ResetPlayerStates()
+    {
+        isInInventory = false;
+        isTalking = false;
+        isWaitingMapTp = false;
+    }
 }

@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 46191744}
   - component: {fileID: 46191742}
   - component: {fileID: 46191741}
+  - component: {fileID: 46191745}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -321,13 +322,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e83fc1af0693148b79dde68532cf84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: {fileID: 0}
-  previousState: {fileID: 0}
   controller: {fileID: 0}
   player: {fileID: 0}
-  gm: {fileID: 0}
   ShowDebug: 1
-  Name: 
+--- !u!114 &46191745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46191737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a47c57d728aaf6d4d80129b887bcd679, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &357143331
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +390,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &490726092
 RectTransform:
   m_ObjectHideFlags: 0
@@ -450,11 +459,11 @@ GameObject:
   - component: {fileID: 493996123}
   m_Layer: 5
   m_Name: Inventory
-  m_TagString: Untagged
+  m_TagString: InventoryUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &493996123
 RectTransform:
   m_ObjectHideFlags: 0

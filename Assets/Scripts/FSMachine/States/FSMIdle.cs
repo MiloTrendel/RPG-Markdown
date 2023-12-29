@@ -4,7 +4,21 @@ using UnityEngine;
 
 public class FSMIdle : IFSMachine
 {
+    private PlayerController controller;
+    private PlayerScript player;
+
+    public FSMIdle()
+    {
+        controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+    }
+
     void IFSMachine.Walk()
+    {
+
+    }
+
+    void IFSMachine.ExitState()
     {
 
     }

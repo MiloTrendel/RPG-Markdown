@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class FSMachine : MonoBehaviour, IFSMachine
 {
-    public IFSMachine currentState;
+    [SerializeField] public IFSMachine currentState;
     public IFSMachine previousState = null;
 
     public PlayerController controller;
@@ -20,15 +20,15 @@ public class FSMachine : MonoBehaviour, IFSMachine
         controller = GetComponent<PlayerController>();
 
         currentState = new FSMIdle();
-
-        log(currentState.GetType().ToString());
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(KeyCode.I))
+        {
             currentState.OpenInventory();
+        }
 
         else if (Input.GetKey(KeyCode.E))
             currentState.StartTalk();
@@ -36,44 +36,23 @@ public class FSMachine : MonoBehaviour, IFSMachine
         else if (Input.GetKey(KeyCode.Escape))
             currentState.CloseEvent();
 
-        currentState.Walk();
+        if (controller.wantsToMove)
+            currentState.Walk();
+
+        log(currentState.GetType().ToString());
     }
 
     public void ChangeState(IFSMachine nextState)
     {
-
         if (nextState.GetType() != currentState.GetType())
         {
+            currentState.ExitState();
             currentState = nextState;
             log("changed");
         }
-        /*if (player.isWaitingMapTp)
-        {
-            ChangeState(new FSMWaitMapTP());
-        }
-        else
-        {
-            if (controller.wantsToMove && !player.isTalking && !player.isInInventory)
-            {
-                ChangeState(new FSMWalking());
-            }
-
-            if (!controller.wantsToMove && !player.isInInventory && !player.isTalking)
-            {
-                ChangeState(new FSMIdle());
-            }
-
-            if (Input.GetKey(KeyCode.I) && !player.isTalking)
-            {
-                ChangeState(new FSMInventory());
-            }
-
-            if (Input.GetKey(KeyCode.E) && player.isInTalkingRange && !player.isInInventory)
-            {
-                ChangeState(new FSMTalking());
-            }
-        }*/
     }
+
+    void IFSMachine.ExitState() { }
 
     void IFSMachine.Walk()
     {

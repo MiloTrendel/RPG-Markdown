@@ -9,4 +9,5 @@ public interface IFSMachine
     public void CloseEvent();
     public void StartTalk();
     public void ChangeMapTrigger();
+    public void ExitState();
 }

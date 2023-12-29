@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -38,14 +39,14 @@ public class PlayerController : MonoBehaviour
         if (horizontalInput != 0f || verticalInput != 0f)
         {
             wantsToMove = true;
-            stateMachine.ChangeState(new FSMWalking());
         }   
         else
         {
             wantsToMove = false;
-            stateMachine.ChangeState(new FSMWalking());
         }
             
+        if (stateMachine.currentState is not FSMWalking)
+            rdBod.velocity = Vector3.zero;
 
         PrintDebug();
 
@@ -69,7 +70,6 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        if (canWalk) rdBod.velocity = axisMove * speed;
-        else rdBod.velocity = Vector3.zero;
+        rdBod.velocity = axisMove * speed;
     }
 }
